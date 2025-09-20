@@ -1,0 +1,34 @@
+services:
+  mailer:
+    image: mailhog/mailhog
+    networks:
+      - backend
+    ports:
+      - ${MAILHOG_PORT:-8092}:8025
+      - "1029:1025"
+
+  db: # Этот хост "db" нужно будет прописывать для подключения к БД
+      image: "mariadb:10.6.20"
+      volumes:
+        # База данных с таблицами
+        - ./docker/containers/mariadb/data:/var/lib/mysql:cached
+        # Конфигурации
+        - ./docker/containers/mariadb/config/my.cnf:/etc/mysql/my.cnf
+        # Дампы что бы можно было войти в контейнер и развернуть добавленные дампы
+        - ./docker/containers/mariadb/dumps/:/dumps/
+        - ./docker/containers/mariadb/init/:/docker-entrypoint-initdb.d
+      environment:
+        MYSQL_SERVERNAME: "db"
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
+        MARIADB_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      ports:
+        - ${MYSQL_PORT:-3306}:3306
+      networks:
+        - backend
+networks:
+    front:
+      external: true
+    backend:
