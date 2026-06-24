@@ -19,13 +19,13 @@ func main() {
 	letterRepository := infrastructure.NewLetterRepository(app.DB, context)
 
 	clientId := domain.NewClientId()
-	client := domain.NewClient(clientId)
-	clientRepository := infrastructure.NewClientRepository(app.DB, context)
-	err := clientRepository.Save(client)
 
-	if err != nil {
-		panic(err)
-	}
+	clientName, _ := domain.NewClientName("Alex")
+
+	client, _ := domain.NewClient(clientId, clientName)
+
+	clientRepository := infrastructure.NewClientRepository(app.DB, context)
+	_ = clientRepository.Save(client)
 
 	count := getCount()
 	letters := make([]*domain.Letter, count)
@@ -47,11 +47,7 @@ func main() {
 		letters[i] = letter
 	}
 
-	err = letterRepository.CreateBatch(letters)
-
-	if err != nil {
-		panic(err)
-	}
+	_ = letterRepository.CreateBatch(letters)
 
 	fmt.Println(count, "new letters loaded!")
 }
