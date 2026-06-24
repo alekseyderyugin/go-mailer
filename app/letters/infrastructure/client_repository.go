@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"go-mailer/letters/domain"
+
 	"gorm.io/gorm"
 )
 
@@ -18,7 +19,7 @@ func NewClientRepository(db *gorm.DB, ctx *Context) *ClientRepository {
 }
 
 func (rep *ClientRepository) AutoMigrate() error {
-	return (*rep).db.AutoMigrate(&domain.Client{})
+	return (rep).db.AutoMigrate(&domain.Client{})
 }
 
 func (rep *ClientRepository) Save(client *domain.Client) error {
