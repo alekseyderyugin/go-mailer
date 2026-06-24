@@ -19,9 +19,7 @@ func main() {
 	letterRepository := infrastructure.NewLetterRepository(app.DB, context)
 
 	clientId := domain.NewClientId()
-
 	clientName, _ := domain.NewClientName("Alex")
-
 	client, _ := domain.NewClient(clientId, clientName)
 
 	clientRepository := infrastructure.NewClientRepository(app.DB, context)
