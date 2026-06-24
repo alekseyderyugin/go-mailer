@@ -1,8 +1,9 @@
 package domain
 
 import (
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type LetterStatus string
@@ -38,6 +39,7 @@ type Letter struct {
 func NewLetter(
 	id LetterId,
 	from string,
+	fromName string,
 	to []Address,
 	subject string,
 	htmlMessage HtmlMessage,
@@ -47,6 +49,7 @@ func NewLetter(
 	entity := Letter{
 		ID:           id,
 		From:         from,
+		FromName:     fromName,
 		To:           to,
 		Cc:           []Address{},
 		Bcc:          []Address{},

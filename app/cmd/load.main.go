@@ -35,6 +35,7 @@ func main() {
 		letter := domain.NewLetter(
 			letterId,
 			uniqId+"_sender@test.test",
+			uniqId+" some sender",
 			[]domain.Address{domain.NewAddress(uniqId+"_recipient@test.test", "")},
 			"some subject",
 			domain.HtmlMessage("some html message "+uniqId),
